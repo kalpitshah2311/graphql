@@ -1,20 +1,19 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const dotenv = require('dotenv')
 const { graphqlHTTP } = require('express-graphql')
 
 const app = express()
+dotenv.config({ path: './env/.env' })
 
 const schema = require('./schema')
 const root = require('./resolver')
 
 mongoose
-    .connect(
-        'mongodb+srv://admin:admin@testcluster.8ubqaa3.mongodb.net/graphql',
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        }
-    )
+    .connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.error('Error connecting to MongoDB', err))
 
