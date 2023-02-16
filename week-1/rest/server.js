@@ -1,12 +1,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const dotenv = require('dotenv')
 const books = require('./routes/books.routes')
 const bodyParser = require('body-parser')
 
 const app = express()
+dotenv.config({ path: './env/.env' })
 
 mongoose
-    .connect('mongodb+srv://admin:admin@testcluster.8ubqaa3.mongodb.net/rest', {
+    .connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
     })
     .then(() => console.log('MongoDB connected'))
